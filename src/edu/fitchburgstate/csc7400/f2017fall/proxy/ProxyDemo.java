@@ -2,8 +2,9 @@
  * Class: Object-Oriented Design and Analysis
  * Professor: Orlando Montalvo
  * Assignment: HW 10
+ * Students: Ragadeepthi, Manaswitha, Radhika
  * 
- * Date: 2017-11-28
+ * Date: 2017-10-12
  */
 package edu.fitchburgstate.csc7400.f2017fall.proxy;
 
@@ -11,13 +12,12 @@ import java.io.File;
 import java.io.PrintWriter;
 
 /**
- * Show the contents of all the files in a specific directory
+ * Main program to call StringifierProxy class
  */
-public class ShowFileContents {
+public class ProxyDemo {
 
     /**
-     * Accepts a file directory and then prints out the contents of
-     * all the files in that directory
+     * Accepts a file directory and prints their names and content.
      * @param args single arg with directory path
      */
     public static void main(String[] args) {
@@ -25,8 +25,8 @@ public class ShowFileContents {
             System.out.println("Usage: java ShowFileContents <directory>");
         }
         String dirname = args[0];
-
         File dir = new File(dirname);
+       
         if (!dir.exists()) {
             System.err.println(dirname + " does not exist");
             return;
@@ -36,12 +36,9 @@ public class ShowFileContents {
             return;
         }
 
-        PrintWriter outWriter = new PrintWriter(System.out);
-        for (File file: dir.listFiles()) {
-            if (file.isDirectory()) continue;
-            FileStringifier fd = new SlowFileStringifier(file.getPath());
-            fd.display(outWriter);
-        }
+       PrintWriter outWriter = new PrintWriter(System.out);
+       FileStringifier fd = new StringifierProxy(outWriter, dir);
+       fd.display(outWriter);
     }
 
 }
